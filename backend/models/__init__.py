@@ -1,1 +1,31 @@
-# Backend models package
+from .schema import (
+    PaymentMethod,
+    FailureCategory,
+    TransactionStatus,
+    SubscriptionType,
+    ContactChannelPref,
+    ActionTaken,
+    Outcome,
+    Transaction,
+    CustomerContext,
+    RecoveryAttempt,
+    BlockedAction,
+    Decision,
+    AuditEntry,
+)
+
+__all__ = [
+    "PaymentMethod",
+    "FailureCategory",
+    "TransactionStatus",
+    "SubscriptionType",
+    "ContactChannelPref",
+    "ActionTaken",
+    "Outcome",
+    "Transaction",
+    "CustomerContext",
+    "RecoveryAttempt",
+    "BlockedAction",
+    "Decision",
+    "AuditEntry",
+]
