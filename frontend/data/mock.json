@@ -1,0 +1,540 @@
+[
+  {
+    "transaction_id": "TXN_90821",
+    "amount": 2499.0,
+    "timestamp": "2026-08-30T14:22:10Z",
+    "payment_method": "upi",
+    "failure_code": "UPI_BANK_TIMEOUT",
+    "failure_message": "NPCI / Bank Server not responding within 15000ms",
+    "failure_category": "technical_timeout",
+    "status": "recovered",
+    "subscription_type": "saas",
+    "customer": {
+      "customer_id": "CUST_5012",
+      "tenure_days": 180,
+      "is_new_customer": false,
+      "payment_history_score": 0.94,
+      "contact_channel_pref": "whatsapp"
+    },
+    "prior_attempts": [
+      {
+        "attempt_id": "ATT_101",
+        "transaction_id": "TXN_90821",
+        "action_taken": "retry_now",
+        "timestamp": "2026-08-30T14:22:15Z",
+        "outcome": "failed"
+      }
+    ],
+    "decision": {
+      "transaction_id": "TXN_90821",
+      "selected_action": "payment_link",
+      "confidence": 0.92,
+      "reasoning": "High-tenure customer (180d, score 0.94) suffered NPCI bank timeout on UPI. Instant retry failed due to persistent bank degradation. AI selected instant WhatsApp Payment Link to allow customer to complete via alternative bank account without losing SaaS access.",
+      "blocked_actions": [
+        {
+          "action": "retry_now",
+          "reason": "NPCI switch health score < 40%; immediate retry risk of secondary timeout"
+        },
+        {
+          "action": "stop",
+          "reason": "High LTV customer; stopping recovery causes churn risk on active subscription"
+        }
+      ],
+      "timestamp": "2026-08-30T14:22:20Z"
+    },
+    "audit_entry": {
+      "transaction_id": "TXN_90821",
+      "decision_snapshot": {
+        "transaction_id": "TXN_90821",
+        "selected_action": "payment_link",
+        "confidence": 0.92,
+        "reasoning": "High-tenure customer (180d, score 0.94) suffered NPCI bank timeout on UPI. Instant retry failed due to persistent bank degradation. AI selected instant WhatsApp Payment Link to allow customer to complete via alternative bank account without losing SaaS access.",
+        "blocked_actions": [
+          {
+            "action": "retry_now",
+            "reason": "NPCI switch health score < 40%; immediate retry risk of secondary timeout"
+          },
+          {
+            "action": "stop",
+            "reason": "High LTV customer; stopping recovery causes churn risk on active subscription"
+          }
+        ],
+        "timestamp": "2026-08-30T14:22:20Z"
+      },
+      "recovered": true,
+      "amount_recovered": 2499.0,
+      "outcome_timestamp": "2026-08-30T14:26:45Z"
+    }
+  },
+  {
+    "transaction_id": "TXN_90822",
+    "amount": 8999.0,
+    "timestamp": "2026-08-30T13:45:00Z",
+    "payment_method": "card",
+    "failure_code": "INSUFFICIENT_FUNDS",
+    "failure_message": "Account balance insufficient for authorization",
+    "failure_category": "insufficient_funds",
+    "status": "recovering",
+    "subscription_type": "emi",
+    "customer": {
+      "customer_id": "CUST_3190",
+      "tenure_days": 420,
+      "is_new_customer": false,
+      "payment_history_score": 0.88,
+      "contact_channel_pref": "sms"
+    },
+    "prior_attempts": [],
+    "decision": {
+      "transaction_id": "TXN_90822",
+      "selected_action": "retry_later",
+      "confidence": 0.89,
+      "reasoning": "Salary cycle analysis predicts payday deposit in 48 hours (1st of month). Immediate retry blocked to avoid hard decline and customer annoyance. Scheduled automated retry at 09:00 AM post-salary deposit date.",
+      "blocked_actions": [
+        {
+          "action": "retry_now",
+          "reason": "High risk of immediate decline when balance is insufficient mid-month"
+        },
+        {
+          "action": "alt_method",
+          "reason": "EMI mandates require registered primary card retry sequence"
+        }
+      ],
+      "timestamp": "2026-08-30T13:45:05Z"
+    },
+    "audit_entry": {
+      "transaction_id": "TXN_90822",
+      "decision_snapshot": {
+        "transaction_id": "TXN_90822",
+        "selected_action": "retry_later",
+        "confidence": 0.89,
+        "reasoning": "Salary cycle analysis predicts payday deposit in 48 hours (1st of month). Immediate retry blocked to avoid hard decline and customer annoyance. Scheduled automated retry at 09:00 AM post-salary deposit date.",
+        "blocked_actions": [
+          {
+            "action": "retry_now",
+            "reason": "High risk of immediate decline when balance is insufficient mid-month"
+          },
+          {
+            "action": "alt_method",
+            "reason": "EMI mandates require registered primary card retry sequence"
+          }
+        ],
+        "timestamp": "2026-08-30T13:45:05Z"
+      },
+      "recovered": false,
+      "amount_recovered": 0.0,
+      "outcome_timestamp": "2026-08-30T13:45:05Z"
+    }
+  },
+  {
+    "transaction_id": "TXN_90823",
+    "amount": 1499.0,
+    "timestamp": "2026-08-30T12:10:33Z",
+    "payment_method": "card",
+    "failure_code": "EXPIRED_CARD",
+    "failure_message": "Card expiration date passed",
+    "failure_category": "card_expired",
+    "status": "recovered",
+    "subscription_type": "recurring",
+    "customer": {
+      "customer_id": "CUST_7741",
+      "tenure_days": 12,
+      "is_new_customer": true,
+      "payment_history_score": 0.65,
+      "contact_channel_pref": "email"
+    },
+    "prior_attempts": [],
+    "decision": {
+      "transaction_id": "TXN_90823",
+      "selected_action": "alt_method",
+      "confidence": 0.95,
+      "reasoning": "Card expired error is permanent. Auto-retry blocked. Triggered card updater API request and sent interactive email asking customer to switch mandate to UPI AutoPay.",
+      "blocked_actions": [
+        {
+          "action": "retry_now",
+          "reason": "Expired cards will always hard-decline; retrying incurs gateway penalties"
+        },
+        {
+          "action": "retry_later",
+          "reason": "Card status is permanent unless updated by cardholder"
+        }
+      ],
+      "timestamp": "2026-08-30T12:10:40Z"
+    },
+    "audit_entry": {
+      "transaction_id": "TXN_90823",
+      "decision_snapshot": {
+        "transaction_id": "TXN_90823",
+        "selected_action": "alt_method",
+        "confidence": 0.95,
+        "reasoning": "Card expired error is permanent. Auto-retry blocked. Triggered card updater API request and sent interactive email asking customer to switch mandate to UPI AutoPay.",
+        "blocked_actions": [
+          {
+            "action": "retry_now",
+            "reason": "Expired cards will always hard-decline; retrying incurs gateway penalties"
+          },
+          {
+            "action": "retry_later",
+            "reason": "Card status is permanent unless updated by cardholder"
+          }
+        ],
+        "timestamp": "2026-08-30T12:10:40Z"
+      },
+      "recovered": true,
+      "amount_recovered": 1499.0,
+      "outcome_timestamp": "2026-08-30T12:18:22Z"
+    }
+  },
+  {
+    "transaction_id": "TXN_90824",
+    "amount": 15000.0,
+    "timestamp": "2026-08-30T11:05:14Z",
+    "payment_method": "netbanking",
+    "failure_code": "SUSPICIOUS_VELOCITY",
+    "failure_message": "Flagged by risk engine for high velocity",
+    "failure_category": "suspected_fraud",
+    "status": "stopped",
+    "subscription_type": "one_time",
+    "customer": {
+      "customer_id": "CUST_9912",
+      "tenure_days": 3,
+      "is_new_customer": true,
+      "payment_history_score": 0.20,
+      "contact_channel_pref": "email"
+    },
+    "prior_attempts": [],
+    "decision": {
+      "transaction_id": "TXN_90824",
+      "selected_action": "stop",
+      "confidence": 0.98,
+      "reasoning": "New account (<3d) attempting high-value netbanking transaction with mismatching IP location. High risk score (0.20). Autonomous recovery halted to protect merchant from chargeback penalties.",
+      "blocked_actions": [
+        {
+          "action": "retry_now",
+          "reason": "Fraud risk threshold exceeded (>85% fraud probability)"
+        },
+        {
+          "action": "payment_link",
+          "reason": "Bypassing 3DS checks presents chargeback vulnerability"
+        }
+      ],
+      "timestamp": "2026-08-30T11:05:20Z"
+    },
+    "audit_entry": {
+      "transaction_id": "TXN_90824",
+      "decision_snapshot": {
+        "transaction_id": "TXN_90824",
+        "selected_action": "stop",
+        "confidence": 0.98,
+        "reasoning": "New account (<3d) attempting high-value netbanking transaction with mismatching IP location. High risk score (0.20). Autonomous recovery halted to protect merchant from chargeback penalties.",
+        "blocked_actions": [
+          {
+            "action": "retry_now",
+            "reason": "Fraud risk threshold exceeded (>85% fraud probability)"
+          },
+          {
+            "action": "payment_link",
+            "reason": "Bypassing 3DS checks presents chargeback vulnerability"
+          }
+        ],
+        "timestamp": "2026-08-30T11:05:20Z"
+      },
+      "recovered": false,
+      "amount_recovered": 0.0,
+      "outcome_timestamp": "2026-08-30T11:05:20Z"
+    }
+  },
+  {
+    "transaction_id": "TXN_90825",
+    "amount": 3499.0,
+    "timestamp": "2026-08-30T10:30:45Z",
+    "payment_method": "upi",
+    "failure_code": "OTP_EXPIRED",
+    "failure_message": "User entered OTP after expiration window",
+    "failure_category": "wrong_otp",
+    "status": "recovered",
+    "subscription_type": "saas",
+    "customer": {
+      "customer_id": "CUST_4088",
+      "tenure_days": 210,
+      "is_new_customer": false,
+      "payment_history_score": 0.91,
+      "contact_channel_pref": "whatsapp"
+    },
+    "prior_attempts": [],
+    "decision": {
+      "transaction_id": "TXN_90825",
+      "selected_action": "reminder",
+      "confidence": 0.91,
+      "reasoning": "Customer delayed entering OTP due to app switching. Sent subtle WhatsApp interactive push with 1-click re-authorization deep link.",
+      "blocked_actions": [
+        {
+          "action": "retry_now",
+          "reason": "Requires customer initiation for 2FA validation"
+        }
+      ],
+      "timestamp": "2026-08-30T10:30:50Z"
+    },
+    "audit_entry": {
+      "transaction_id": "TXN_90825",
+      "decision_snapshot": {
+        "transaction_id": "TXN_90825",
+        "selected_action": "reminder",
+        "confidence": 0.91,
+        "reasoning": "Customer delayed entering OTP due to app switching. Sent subtle WhatsApp interactive push with 1-click re-authorization deep link.",
+        "blocked_actions": [
+          {
+            "action": "retry_now",
+            "reason": "Requires customer initiation for 2FA validation"
+          }
+        ],
+        "timestamp": "2026-08-30T10:30:50Z"
+      },
+      "recovered": true,
+      "amount_recovered": 3499.0,
+      "outcome_timestamp": "2026-08-30T10:32:15Z"
+    }
+  },
+  {
+    "transaction_id": "TXN_90826",
+    "amount": 599.0,
+    "timestamp": "2026-08-30T09:15:00Z",
+    "payment_method": "card",
+    "failure_code": "GATEWAY_TIMEOUT",
+    "failure_message": "Gateway socket timed out",
+    "failure_category": "technical_timeout",
+    "status": "recovered",
+    "subscription_type": "recurring",
+    "customer": {
+      "customer_id": "CUST_1102",
+      "tenure_days": 90,
+      "is_new_customer": false,
+      "payment_history_score": 0.85,
+      "contact_channel_pref": "email"
+    },
+    "prior_attempts": [],
+    "decision": {
+      "transaction_id": "TXN_90826",
+      "selected_action": "retry_now",
+      "confidence": 0.94,
+      "reasoning": "Transient gateway glitch detected via telemetry. Immediate background retry sent through secondary payment gateway pipe.",
+      "blocked_actions": [
+        {
+          "action": "payment_link",
+          "reason": "Unnecessary friction for transient backend network flicker"
+        }
+      ],
+      "timestamp": "2026-08-30T09:15:05Z"
+    },
+    "audit_entry": {
+      "transaction_id": "TXN_90826",
+      "decision_snapshot": {
+        "transaction_id": "TXN_90826",
+        "selected_action": "retry_now",
+        "confidence": 0.94,
+        "reasoning": "Transient gateway glitch detected via telemetry. Immediate background retry sent through secondary payment gateway pipe.",
+        "blocked_actions": [
+          {
+            "action": "payment_link",
+            "reason": "Unnecessary friction for transient backend network flicker"
+          }
+        ],
+        "timestamp": "2026-08-30T09:15:05Z"
+      },
+      "recovered": true,
+      "amount_recovered": 599.0,
+      "outcome_timestamp": "2026-08-30T09:15:08Z"
+    }
+  },
+  {
+    "transaction_id": "TXN_90827",
+    "amount": 12499.0,
+    "timestamp": "2026-08-30T08:00:22Z",
+    "payment_method": "netbanking",
+    "failure_code": "ISSUER_UNAVAILABLE",
+    "failure_message": "Issuing bank core banking system down",
+    "failure_category": "issuer_decline",
+    "status": "recovering",
+    "subscription_type": "emi",
+    "customer": {
+      "customer_id": "CUST_6211",
+      "tenure_days": 310,
+      "is_new_customer": false,
+      "payment_history_score": 0.97,
+      "contact_channel_pref": "push"
+    },
+    "prior_attempts": [],
+    "decision": {
+      "transaction_id": "TXN_90827",
+      "selected_action": "retry_later",
+      "confidence": 0.87,
+      "reasoning": "HDFC core banking maintenance window active until 10:30 AM. Delayed intelligent retry queued for 11:00 AM.",
+      "blocked_actions": [
+        {
+          "action": "retry_now",
+          "reason": "Issuer CBS status is DOWN; immediate retry will guaranteed decline"
+        }
+      ],
+      "timestamp": "2026-08-30T08:00:28Z"
+    },
+    "audit_entry": {
+      "transaction_id": "TXN_90827",
+      "decision_snapshot": {
+        "transaction_id": "TXN_90827",
+        "selected_action": "retry_later",
+        "confidence": 0.87,
+        "reasoning": "HDFC core banking maintenance window active until 10:30 AM. Delayed intelligent retry queued for 11:00 AM.",
+        "blocked_actions": [
+          {
+            "action": "retry_now",
+            "reason": "Issuer CBS status is DOWN; immediate retry will guaranteed decline"
+          }
+        ],
+        "timestamp": "2026-08-30T08:00:28Z"
+      },
+      "recovered": false,
+      "amount_recovered": 0.0,
+      "outcome_timestamp": "2026-08-30T08:00:28Z"
+    }
+  },
+  {
+    "transaction_id": "TXN_90828",
+    "amount": 1999.0,
+    "timestamp": "2026-08-30T07:44:11Z",
+    "payment_method": "wallet",
+    "failure_code": "NETWORK_DISCONNECT",
+    "failure_message": "Client connection dropped mid-handshake",
+    "failure_category": "network_drop",
+    "status": "recovered",
+    "subscription_type": "one_time",
+    "customer": {
+      "customer_id": "CUST_8043",
+      "tenure_days": 45,
+      "is_new_customer": false,
+      "payment_history_score": 0.79,
+      "contact_channel_pref": "sms"
+    },
+    "prior_attempts": [],
+    "decision": {
+      "transaction_id": "TXN_90828",
+      "selected_action": "retry_now",
+      "confidence": 0.96,
+      "reasoning": "Network drop occurred on mobile app switch. Idempotency token verified. Auto-retry sent seamlessly.",
+      "blocked_actions": [],
+      "timestamp": "2026-08-30T07:44:15Z"
+    },
+    "audit_entry": {
+      "transaction_id": "TXN_90828",
+      "decision_snapshot": {
+        "transaction_id": "TXN_90828",
+        "selected_action": "retry_now",
+        "confidence": 0.96,
+        "reasoning": "Network drop occurred on mobile app switch. Idempotency token verified. Auto-retry sent seamlessly.",
+        "blocked_actions": [],
+        "timestamp": "2026-08-30T07:44:15Z"
+      },
+      "recovered": true,
+      "amount_recovered": 1999.0,
+      "outcome_timestamp": "2026-08-30T07:44:18Z"
+    }
+  },
+  {
+    "transaction_id": "TXN_90829",
+    "amount": 4999.0,
+    "timestamp": "2026-08-30T06:12:00Z",
+    "payment_method": "card",
+    "failure_code": "LIMIT_EXCEEDED",
+    "failure_message": "Daily online card transaction limit reached",
+    "failure_category": "issuer_decline",
+    "status": "failed",
+    "subscription_type": "saas",
+    "customer": {
+      "customer_id": "CUST_2210",
+      "tenure_days": 150,
+      "is_new_customer": false,
+      "payment_history_score": 0.82,
+      "contact_channel_pref": "email"
+    },
+    "prior_attempts": [
+      {
+        "attempt_id": "ATT_201",
+        "transaction_id": "TXN_90829",
+        "action_taken": "payment_link",
+        "timestamp": "2026-08-30T06:15:00Z",
+        "outcome": "failed"
+      }
+    ],
+    "decision": {
+      "transaction_id": "TXN_90829",
+      "selected_action": "retry_later",
+      "confidence": 0.80,
+      "reasoning": "Daily card limit reset occurs at midnight UTC. Scheduled retry for 00:05 UTC. Payment link reminder sent.",
+      "blocked_actions": [
+        {
+          "action": "retry_now",
+          "reason": "Card limit will not reset until daily settlement cutoff"
+        }
+      ],
+      "timestamp": "2026-08-30T06:12:08Z"
+    },
+    "audit_entry": {
+      "transaction_id": "TXN_90829",
+      "decision_snapshot": {
+        "transaction_id": "TXN_90829",
+        "selected_action": "retry_later",
+        "confidence": 0.80,
+        "reasoning": "Daily card limit reset occurs at midnight UTC. Scheduled retry for 00:05 UTC. Payment link reminder sent.",
+        "blocked_actions": [
+          {
+            "action": "retry_now",
+            "reason": "Card limit will not reset until daily settlement cutoff"
+          }
+        ],
+        "timestamp": "2026-08-30T06:12:08Z"
+      },
+      "recovered": false,
+      "amount_recovered": 0.0,
+      "outcome_timestamp": "2026-08-30T06:12:08Z"
+    }
+  },
+  {
+    "transaction_id": "TXN_90830",
+    "amount": 799.0,
+    "timestamp": "2026-08-30T05:30:19Z",
+    "payment_method": "upi",
+    "failure_code": "INSUFFICIENT_FUNDS",
+    "failure_message": "VPA account balance low",
+    "failure_category": "insufficient_funds",
+    "status": "recovered",
+    "subscription_type": "recurring",
+    "customer": {
+      "customer_id": "CUST_5501",
+      "tenure_days": 60,
+      "is_new_customer": false,
+      "payment_history_score": 0.77,
+      "contact_channel_pref": "whatsapp"
+    },
+    "prior_attempts": [],
+    "decision": {
+      "transaction_id": "TXN_90830",
+      "selected_action": "payment_link",
+      "confidence": 0.88,
+      "reasoning": "Sent micro-nudge via WhatsApp with multi-VPA payment link so customer can switch from primary ICICI VPA to secondary GPay account.",
+      "blocked_actions": [],
+      "timestamp": "2026-08-30T05:30:25Z"
+    },
+    "audit_entry": {
+      "transaction_id": "TXN_90830",
+      "decision_snapshot": {
+        "transaction_id": "TXN_90830",
+        "selected_action": "payment_link",
+        "confidence": 0.88,
+        "reasoning": "Sent micro-nudge via WhatsApp with multi-VPA payment link so customer can switch from primary ICICI VPA to secondary GPay account.",
+        "blocked_actions": [],
+        "timestamp": "2026-08-30T05:30:25Z"
+      },
+      "recovered": true,
+      "amount_recovered": 799.0,
+      "outcome_timestamp": "2026-08-30T05:34:10Z"
+    }
+  }
+]
