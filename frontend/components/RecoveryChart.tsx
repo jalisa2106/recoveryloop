@@ -23,28 +23,30 @@ const chartData = [
 ];
 
 export const RecoveryChart: React.FC = () => {
-  const { theme } = useTheme();
+  const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const activeTheme = mounted ? theme : 'dark';
-  const gridColor = activeTheme === 'dark' ? '#1e293b' : '#e2e8f0';
-  const labelColor = activeTheme === 'dark' ? '#64748b' : '#475569';
-  const tooltipBg = activeTheme === 'dark' ? '#0f172a' : '#ffffff';
-  const tooltipBorder = activeTheme === 'dark' ? '#334155' : '#cbd5e1';
-  const tooltipText = activeTheme === 'dark' ? '#f8fafc' : '#0f172a';
+  const activeTheme = mounted ? resolvedTheme : 'dark';
+  
+  // Mapped strictly to globals.css Matte Charcoal hex values
+  const gridColor = activeTheme === 'dark' ? '#27272a' : '#e4e4e7';
+  const labelColor = activeTheme === 'dark' ? '#a1a1aa' : '#71717a';
+  const tooltipBg = activeTheme === 'dark' ? '#18181b' : '#ffffff';
+  const tooltipBorder = activeTheme === 'dark' ? '#27272a' : '#e4e4e7';
+  const tooltipText = activeTheme === 'dark' ? '#fafafa' : '#09090b';
 
   return (
-    <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm dark:shadow-lg transition-colors duration-200">
+    <div className="bg-card border border-border rounded-2xl p-6 shadow-sm transition-colors duration-200">
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-200">Recovery Rate Benchmark</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">RecoveryLoop Autonomous Agent vs Generic Fixed Retries (%)</p>
+          <h3 className="text-sm font-bold text-foreground">Recovery Rate Benchmark</h3>
+          <p className="text-xs text-muted-foreground mt-0.5">RecoveryLoop Autonomous Agent vs Generic Fixed Retries (%)</p>
         </div>
-        <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-800/40">
+        <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
           +41% Lift
         </span>
       </div>
@@ -67,7 +69,7 @@ export const RecoveryChart: React.FC = () => {
               itemStyle={{ color: tooltipText }}
             />
             <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '12px' }} />
-            <Bar dataKey="baseline" name="Baseline Fixed Retries" fill={theme === 'dark' ? '#475569' : '#94a3b8'} radius={[4, 4, 0, 0]} />
+            <Bar dataKey="baseline" name="Baseline Fixed Retries" fill={activeTheme === 'dark' ? '#3f3f46' : '#d4d4d8'} radius={[4, 4, 0, 0]} />
             <Bar dataKey="recoveryLoop" name="RecoveryLoop Agent" fill="#6366f1" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
